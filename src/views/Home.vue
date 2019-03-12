@@ -2,7 +2,7 @@
   <div class="container">
     <h2>Home</h2>
 
-    <List :list="campaigns" type="campaigns"/>
+    <List :list="campaigns" type="campaign"/>
   </div>
 </template>
 

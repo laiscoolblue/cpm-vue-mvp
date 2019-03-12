@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
+import Campaign from './views/Campaign.vue';
+// import Campaign from './views/Campaign.vue';
 
 Vue.use(Router);
 
@@ -10,8 +12,13 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'Home',
       component: Home,
+    },
+    {
+      path: '/campaign/:id',
+      name: 'Campaign',
+      component: Campaign,
     },
   ],
 });
