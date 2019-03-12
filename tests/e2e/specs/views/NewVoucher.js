@@ -1,5 +1,5 @@
 describe('Header', () => {
-  it('Shows correct title', () => {
+  it('Shows list items', () => {
     cy.visit('/');
     cy.contains('h1', 'Coolblue Payment Methods');
   });

@@ -6,7 +6,7 @@
     <h2>Vouchers</h2>
     <ul class="list">
       <li v-for="item in vouchers" :key="item.id">
-        $ {{ item.value }} - of type {{ item.preset.title }}
+        $ {{ item.value }} - of type {{ item.preset.name }}
       </li>
     </ul>
   </div>
@@ -14,8 +14,6 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
-
-import List from '@/components/layout/List.vue';
 
 export default {
   name: 'Home',
@@ -26,9 +24,6 @@ export default {
   methods: mapActions([
     'retrieveVouchers',
   ]),
-  components: {
-    List,
-  },
   mounted() {
     this.retrieveVouchers(this.customer.id);
   },

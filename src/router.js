@@ -22,11 +22,6 @@ export default new Router({
       component: Campaign,
     },
     {
-      path: '/campaign/:id',
-      name: 'Campaign',
-      component: Campaign,
-    },
-    {
       path: '/issue-voucher/:presetId',
       name: 'New voucher',
       component: NewVoucher,

@@ -1,9 +1,9 @@
 <template>
   <ul class="list">
     <li v-for="item in list" :key="item.id">
-      <router-link :to="`/${type}/${item.id}`" v-if="type">{{ item.title }}</router-link>
+      <router-link :to="`/${type}/${item.id}`" v-if="type">{{ item.name }}</router-link>
       <template v-else>
-        {{ item.title }}
+        {{ item.name }}
       </template>
     </li>
   </ul>

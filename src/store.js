@@ -3,8 +3,10 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
 import config from './config';
+import { checkBartsApi } from './helpers';
 
 const { api, barts } = config;
+
 const customer = {
   name: 'Jane Doe',
   id: 1,
@@ -12,12 +14,6 @@ const customer = {
 
 Vue.use(Vuex);
 
-function checkBartsApi() {
-  axios.get(`${barts}/campaigns`).then(
-    () => true,
-    () => false,
-  );
-}
 
 export default new Vuex.Store({
   state: {
@@ -27,6 +23,7 @@ export default new Vuex.Store({
     preset: {},
     vouchers: [],
     customer,
+    pages: [],
   },
   mutations: {
     SET_CAMPAIGNS(state, payload) {
@@ -43,6 +40,9 @@ export default new Vuex.Store({
     },
     SET_VOUCHERS(state, payload) {
       state.vouchers = payload.data;
+    },
+    SET_PAGES(state, payload) {
+      state.pages = payload.data;
     },
   },
   actions: {
@@ -70,28 +70,33 @@ export default new Vuex.Store({
       );
     },
     // Pre-set
-    retrievePresets({ commit }, id) {
-      if (checkBartsApi()) {
-        axios.get(`${api}/presets/campaign/${id}`).then(
-          (response) => {
-            const { data } = response;
-            commit('SET_PRESETS', { data: data.presets });
-          },
-          (err) => {
-            console.error(err.response);
-          },
-        );
-      } else {
-        axios.get(`${api}/pre-sets?campaign=${id}`).then(
-          (response) => {
-            const { data } = response;
-            commit('SET_PRESETS', { data });
-          },
-          (err) => {
-            console.error(err.response);
-          },
-        );
-      }
+    retrievePresets({ commit }, payload) {
+      const { campaignId, page } = payload;
+      const check = checkBartsApi();
+      check
+        .then(() => {
+          axios.get(`${barts}/presets/campaign/${campaignId}?page=${page}`).then(
+            (response) => {
+              const { data } = response;
+              commit('SET_PRESETS', { data: data.presets });
+              commit('SET_PAGES', { data: data.pages });
+            },
+            (err) => {
+              console.error(err.response);
+            },
+          );
+        })
+        .catch(() => {
+          axios.get(`${api}/pre-sets?campaign=${campaignId}`).then(
+            (response) => {
+              const { data } = response;
+              commit('SET_PRESETS', { data });
+            },
+            (err) => {
+              console.error(err.response);
+            },
+          );
+        });
     },
     retrievePreset({ commit }, id) {
       axios.get(`${api}/pre-sets/${id}`).then(
