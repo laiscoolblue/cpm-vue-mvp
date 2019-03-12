@@ -4,13 +4,20 @@ import Vuex from 'vuex';
 import axios from 'axios';
 import config from './config';
 
-const { api } = config;
+const { api, barts } = config;
 const customer = {
   name: 'Jane Doe',
   id: 1,
 };
 
 Vue.use(Vuex);
+
+function checkBartsApi() {
+  axios.get(`${barts}/campaigns`).then(
+    () => true,
+    () => false,
+  );
+}
 
 export default new Vuex.Store({
   state: {
@@ -64,15 +71,27 @@ export default new Vuex.Store({
     },
     // Pre-set
     retrievePresets({ commit }, id) {
-      axios.get(`${api}/pre-sets?campaign=${id}`).then(
-        (response) => {
-          const { data } = response;
-          commit('SET_PRESETS', { data });
-        },
-        (err) => {
-          console.error(err.response);
-        },
-      );
+      if (checkBartsApi()) {
+        axios.get(`${api}/presets/campaign/${id}`).then(
+          (response) => {
+            const { data } = response;
+            commit('SET_PRESETS', { data: data.presets });
+          },
+          (err) => {
+            console.error(err.response);
+          },
+        );
+      } else {
+        axios.get(`${api}/pre-sets?campaign=${id}`).then(
+          (response) => {
+            const { data } = response;
+            commit('SET_PRESETS', { data });
+          },
+          (err) => {
+            console.error(err.response);
+          },
+        );
+      }
     },
     retrievePreset({ commit }, id) {
       axios.get(`${api}/pre-sets/${id}`).then(
