@@ -2,7 +2,7 @@
   <div class="container">
     <h2>Pre-sets from {{ campaign.title }}</h2>
 
-    <List :list="presets" type="preset" v-if="presets.length > 0"/>
+    <List :list="presets" type="issue-voucher" v-if="presets.length > 0"/>
     <p v-else>No pre-set found related to this campaign :/</p>
   </div>
 </template>

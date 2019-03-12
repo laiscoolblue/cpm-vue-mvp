@@ -1,7 +1,10 @@
 <template>
   <ul class="list">
     <li v-for="item in list" :key="item.id">
-      <router-link :to="`/${type}/${item.id}`">{{ item.title }}</router-link>
+      <router-link :to="`/${type}/${item.id}`" v-if="type">{{ item.title }}</router-link>
+      <template v-else>
+        {{ item.title }}
+      </template>
     </li>
   </ul>
 </template>
@@ -24,7 +27,6 @@ export default {
 <style lang="scss">
   .list {
     list-style: none;
-    margin-top: 1em;
 
     li {
       padding: 0.5em 1em;

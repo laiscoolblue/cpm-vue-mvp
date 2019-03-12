@@ -5,6 +5,10 @@ import axios from 'axios';
 import config from './config';
 
 const { api } = config;
+const customer = {
+  name: 'Jane Doe',
+  id: 1,
+};
 
 Vue.use(Vuex);
 
@@ -13,6 +17,8 @@ export default new Vuex.Store({
     campaigns: [],
     campaign: {},
     presets: [],
+    preset: {},
+    customer,
   },
   mutations: {
     SET_CAMPAIGNS(state, payload) {
@@ -24,8 +30,12 @@ export default new Vuex.Store({
     SET_PRESETS(state, payload) {
       state.presets = payload.data;
     },
+    SET_PRESET(state, payload) {
+      state.preset = payload.data;
+    },
   },
   actions: {
+    // Campaigns
     retrieveCampaigns({ commit }) {
       axios.get(`${api}/campaigns`).then(
         (response) => {
@@ -48,6 +58,7 @@ export default new Vuex.Store({
         },
       );
     },
+    // Pre-set
     retrievePresets({ commit }, id) {
       axios.get(`${api}/pre-sets?campaign=${id}`).then(
         (response) => {
@@ -58,6 +69,27 @@ export default new Vuex.Store({
           console.error(err.response);
         },
       );
+    },
+    retrievePreset({ commit }, id) {
+      axios.get(`${api}/pre-sets/${id}`).then(
+        (response) => {
+          const { data } = response;
+          commit('SET_PRESET', { data });
+        },
+        (err) => {
+          console.error(err.response);
+        },
+      );
+    },
+    async issueVoucher({}, data) {
+      let response;
+      try {
+        response = await axios.post(`${api}/vouchers`, data);
+      } catch (err) {
+        console.error(err.response);
+      }
+
+      return response;
     },
   },
 });
