@@ -1,4 +1,4 @@
-/* eslint-disable no-param-reassign */
+/* eslint-disable no-param-reassign, no-empty-pattern */
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
