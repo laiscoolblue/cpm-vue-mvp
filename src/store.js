@@ -18,6 +18,7 @@ export default new Vuex.Store({
     campaign: {},
     presets: [],
     preset: {},
+    vouchers: [],
     customer,
   },
   mutations: {
@@ -32,6 +33,9 @@ export default new Vuex.Store({
     },
     SET_PRESET(state, payload) {
       state.preset = payload.data;
+    },
+    SET_VOUCHERS(state, payload) {
+      state.vouchers = payload.data;
     },
   },
   actions: {
@@ -81,6 +85,7 @@ export default new Vuex.Store({
         },
       );
     },
+    // Vouchers
     async issueVoucher({}, data) {
       let response;
       try {
@@ -90,6 +95,18 @@ export default new Vuex.Store({
       }
 
       return response;
+    },
+    // Pre-set
+    retrieveVouchers({ commit }, id) {
+      axios.get(`${api}/vouchers?customer=${id}`).then(
+        (response) => {
+          const { data } = response;
+          commit('SET_VOUCHERS', { data });
+        },
+        (err) => {
+          console.error(err.response);
+        },
+      );
     },
   },
 });

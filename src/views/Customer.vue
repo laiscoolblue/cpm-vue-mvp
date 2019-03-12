@@ -1,9 +1,14 @@
 <template>
   <div class="container">
-    <h2>Pre-sets from {{ campaign.title }}</h2>
+    <h2>Customer</h2>
+    <p><strong>Name: </strong> {{ customer.name }}</p>
 
-    <List :list="presets" type="issue-voucher" v-if="presets.length > 0"/>
-    <p v-else>No pre-set found related to this campaign :/</p>
+    <h2>Vouchers</h2>
+    <ul class="list">
+      <li v-for="item in vouchers" :key="item.id">
+        $ {{ item.value }} - of type {{ item.preset.title }}
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -13,30 +18,19 @@ import { mapState, mapActions } from 'vuex';
 import List from '@/components/layout/List.vue';
 
 export default {
-  name: 'Campaign',
-  computed: {
-    route() {
-      return this.$route;
-    },
-    campaignId() {
-      const { params } = this.route;
-      return params.id;
-    },
-    ...mapState([
-      'presets',
-      'campaign',
-    ]),
-  },
+  name: 'Home',
+  computed: mapState([
+    'vouchers',
+    'customer',
+  ]),
   methods: mapActions([
-    'retrievePresets',
-    'retrieveCampaign',
+    'retrieveVouchers',
   ]),
   components: {
     List,
   },
   mounted() {
-    this.retrieveCampaign(this.campaignId);
-    this.retrievePresets(this.campaignId);
+    this.retrieveVouchers(this.customer.id);
   },
 };
 </script>
