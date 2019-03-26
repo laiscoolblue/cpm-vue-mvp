@@ -31,7 +31,7 @@ export default {
   mounted() {
     if (!this.campaigns.length) {
       this.retrieveCampaigns()
-        .then((result) => {
+        .then(() => {
           this.isLoaded = true;
         });
     }

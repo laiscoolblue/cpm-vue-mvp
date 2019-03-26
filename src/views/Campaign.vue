@@ -28,7 +28,7 @@ export default {
   data() {
     return {
       activeNumber: 1,
-      isLoaded: false
+      isLoaded: false,
     };
   },
   computed: {
@@ -66,8 +66,9 @@ export default {
     this.retrievePresets({
       campaignId: this.campaignId,
       page: 1,
-    })
-    .then(result => this.isLoaded = true);
+    }).then(() => {
+      this.isLoaded = true;
+    });
   },
 };
 </script>

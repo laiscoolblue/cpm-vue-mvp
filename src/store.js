@@ -3,9 +3,9 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
 import config from './config';
-import { checkBartsApi } from './helpers';
+// import { checkBartsApi } from './helpers';
 
-const { api, barts } = config;
+const { api } = config;
 
 const customer = {
   name: 'Jane Doe',
@@ -72,7 +72,7 @@ export default new Vuex.Store({
     },
     // Pre-set
     retrievePresets({ commit }, payload) {
-      const { campaignId, page } = payload;
+      const { campaignId } = payload;
       return axios.get(`${api}/pre-sets?campaign=${campaignId}`).then(
         (response) => {
           const { data } = response;
@@ -82,6 +82,7 @@ export default new Vuex.Store({
           console.error(err.response);
         },
       );
+      // const { campaignId, page } = payload;
       // const check = checkBartsApi();
       // check
       //   .then(() => {
