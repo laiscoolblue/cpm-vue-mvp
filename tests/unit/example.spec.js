@@ -1,12 +1,10 @@
 import { shallowMount } from '@vue/test-utils';
-import HelloWorld from '@/components/HelloWorld.vue';
+import HelloWorld from '@/components/layout/Header.vue';
 
-describe('HelloWorld.vue', () => {
-  it('renders props.msg when passed', () => {
-    const msg = 'new message';
-    const wrapper = shallowMount(HelloWorld, {
-      propsData: { msg },
-    });
+describe('Header.vue', () => {
+  it('renders correctly', () => {
+    const msg = 'Coolblue Payment Methods';
+    const wrapper = shallowMount(HelloWorld);
     expect(wrapper.text()).toMatch(msg);
   });
 });
