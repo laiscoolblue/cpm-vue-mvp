@@ -1,5 +1,5 @@
 <template>
-  <ul class="list">
+  <ul class="list" data-cy="list-component" v-if="list.length > 0">
     <li v-for="item in list" :key="item.id">
       <router-link :to="`/${type}/${item.id}`" v-if="type">{{ item.name }}</router-link>
       <template v-else>

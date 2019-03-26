@@ -3,6 +3,7 @@
     <h2>Home</h2>
 
     <List :list="campaigns" type="campaign"/>
+    <p v-if="isLoaded && !campaigns.length">No campaings found :(</p>
   </div>
 </template>
 
@@ -13,6 +14,11 @@ import List from '@/components/layout/List.vue';
 
 export default {
   name: 'Home',
+  data() {
+    return {
+      isLoaded: false,
+    };
+  },
   computed: mapState([
     'campaigns',
   ]),
@@ -24,7 +30,10 @@ export default {
   },
   mounted() {
     if (!this.campaigns.length) {
-      this.retrieveCampaigns();
+      this.retrieveCampaigns()
+        .then((result) => {
+          this.isLoaded = true;
+        });
     }
   },
 };
