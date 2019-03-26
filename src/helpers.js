@@ -6,12 +6,13 @@ import config from './config';
 const { barts } = config;
 
 export const checkBartsApi = () => new Promise((resolve, reject) => {
-  axios.get(`${barts}/campaigns`).then(
-    (response) => {
-      resolve(response);
-    },
-    (err) => {
-      reject(err);
-    },
-  );
+  reject();
+  // axios.get(`${barts}/campaigns`).then(
+  //   (response) => {
+  //     resolve(response);
+  //   },
+  //   (err) => {
+  //     reject(err);
+  //   },
+  // );
 });
