@@ -1,48 +1,65 @@
 <template>
   <div id="app">
-    <Header />
-    <router-view/>
+    <v-app>
+      <v-content>
+        <v-navigation-drawer
+          v-model="drawer"
+          right
+          fixed
+          app
+          width="440"
+        >
+          <v-toolbar flat dark color="blue darken-3" class="px-0">
+            <v-btn icon small @click.stop="drawer = false">
+              <v-icon>close</v-icon>
+            </v-btn>
+            <v-toolbar-title class="font-weight-regular">Sorry voucher - 15 euro</v-toolbar-title>
+          </v-toolbar>
+          <v-list class="pt-0" dense>
+            <v-list-tile>
+              <v-list-tile-content
+                class="body-1 grey--text"
+                style="max-width: 120px;">Internal name</v-list-tile-content>
+              <v-list-tile-content class="body-1">Sorry voucher - 15 euro</v-list-tile-content>
+            </v-list-tile>
+          </v-list>
+        </v-navigation-drawer>
+        <Header  />
+        <v-layout justify-center>
+          <v-btn
+            color="pink"
+            dark
+            @click.stop="drawer = !drawer"
+          >
+            Toggle
+          </v-btn>
+        </v-layout>
+        <router-view/>
+      </v-content>
+    </v-app>
   </div>
 </template>
+
+<style lang="scss">
+.v-navigation-drawer--right {
+  &.v-navigation-drawer--open {
+    box-shadow: 0 0 8px rgba(0, 0, 0, .2);
+  }
+}
+</style>
 
 <script>
 import Header from '@/components/layout/Header.vue';
 
 export default {
   name: 'Home',
+  data() {
+    return {
+      drawer: false,
+    };
+  },
   components: {
     Header,
   },
 };
 </script>
-
-<style lang="scss">
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  color: #2c3e50;
-}
-
-.container {
-  max-width: 1180px;
-  margin: 0 auto;
-}
-
-h1 {
-  font-size: 1.4em;
-}
-
-h2 {
-  font-size: 1.2em;
-  margin-bottom: 0.5em;
-}
-
-p {
-  margin-bottom: 0.5em;
-}
-</style>
