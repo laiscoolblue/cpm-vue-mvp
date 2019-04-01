@@ -2,8 +2,8 @@
   <div class="container">
     <h2>Pre-sets from {{ campaign.name }}</h2>
 
-    <List :list="presets" type="issue-voucher" v-if="presets.length > 0"/>
-    <p v-else>No pre-set found related to this campaign :/</p>
+    <List :list="presets" type="issue-voucher"/>
+    <p v-if="isLoaded && !presets.length">No pre-set found related to this campaign :/</p>
 
     <ul class="pagination">
       <li
@@ -28,6 +28,7 @@ export default {
   data() {
     return {
       activeNumber: 1,
+      isLoaded: false,
     };
   },
   computed: {
@@ -65,6 +66,8 @@ export default {
     this.retrievePresets({
       campaignId: this.campaignId,
       page: 1,
+    }).then(() => {
+      this.isLoaded = true;
     });
   },
 };

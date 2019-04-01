@@ -3,9 +3,9 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
 import config from './config';
-import { checkBartsApi } from './helpers';
+// import { checkBartsApi } from './helpers';
 
-const { api, barts } = config;
+const { api } = config;
 
 const customer = {
   name: 'Jane Doe',
@@ -48,10 +48,11 @@ export default new Vuex.Store({
   actions: {
     // Campaigns
     retrieveCampaigns({ commit }) {
-      axios.get(`${api}/campaigns`).then(
+      return axios.get(`${api}/campaigns`).then(
         (response) => {
           const { data } = response;
           commit('SET_CAMPAIGNS', { data });
+          return response;
         },
         (err) => {
           console.error(err.response);
@@ -71,32 +72,42 @@ export default new Vuex.Store({
     },
     // Pre-set
     retrievePresets({ commit }, payload) {
-      const { campaignId, page } = payload;
-      const check = checkBartsApi();
-      check
-        .then(() => {
-          axios.get(`${barts}/presets/campaign/${campaignId}?page=${page}`).then(
-            (response) => {
-              const { data } = response;
-              commit('SET_PRESETS', { data: data.presets });
-              commit('SET_PAGES', { data: data.pages });
-            },
-            (err) => {
-              console.error(err.response);
-            },
-          );
-        })
-        .catch(() => {
-          axios.get(`${api}/pre-sets?campaign=${campaignId}`).then(
-            (response) => {
-              const { data } = response;
-              commit('SET_PRESETS', { data });
-            },
-            (err) => {
-              console.error(err.response);
-            },
-          );
-        });
+      const { campaignId } = payload;
+      return axios.get(`${api}/pre-sets?campaign=${campaignId}`).then(
+        (response) => {
+          const { data } = response;
+          commit('SET_PRESETS', { data });
+        },
+        (err) => {
+          console.error(err.response);
+        },
+      );
+      // const { campaignId, page } = payload;
+      // const check = checkBartsApi();
+      // check
+      //   .then(() => {
+      //     axios.get(`${barts}/presets/campaign/${campaignId}?page=${page}`).then(
+      //       (response) => {
+      //         const { data } = response;
+      //         commit('SET_PRESETS', { data: data.presets });
+      //         commit('SET_PAGES', { data: data.pages });
+      //       },
+      //       (err) => {
+      //         console.error(err.response);
+      //       },
+      //     );
+      //   })
+      //   .catch(() => {
+      //     return axios.get(`${api}/pre-sets?campaign=${campaignId}`).then(
+      //       (response) => {
+      //         const { data } = response;
+      //         commit('SET_PRESETS', { data });
+      //       },
+      //       (err) => {
+      //         console.error(err.response);
+      //       },
+      //     );
+      //   });
     },
     retrievePreset({ commit }, id) {
       axios.get(`${api}/pre-sets/${id}`).then(

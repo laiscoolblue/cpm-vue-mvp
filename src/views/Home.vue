@@ -18,6 +18,7 @@
                 </v-container>
                 <v-divider style="border-width: 2px 0 0"></v-divider>
                 <List :list="campaigns" type="campaign" class="border"/>
+                <p v-if="isLoaded && !campaigns.length">No campaings found :(</p>
               </v-flex>
               <!-- PRESET LIST -->
               <v-flex>
@@ -39,6 +40,11 @@ import List from '@/components/layout/List.vue';
 
 export default {
   name: 'Home',
+  data() {
+    return {
+      isLoaded: false,
+    };
+  },
   computed: mapState([
     'campaigns',
   ]),
@@ -50,7 +56,10 @@ export default {
   },
   mounted() {
     if (!this.campaigns.length) {
-      this.retrieveCampaigns();
+      this.retrieveCampaigns()
+        .then(() => {
+          this.isLoaded = true;
+        });
     }
   },
 };
