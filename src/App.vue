@@ -23,6 +23,12 @@
               <v-list-tile-content class="body-1">Sorry voucher - 15 euro</v-list-tile-content>
             </v-list-tile>
           </v-list>
+          <v-footer class="px-3 py-2 drawer__footer" inset app height="auto" color="transparent">
+            <v-layout>
+              <v-btn color="info">Assign voucher</v-btn>
+              <v-btn color="white" class="grey--text text--darken-2">Cancel</v-btn>
+            </v-layout>
+          </v-footer>
         </v-navigation-drawer>
         <Header  />
         <v-layout justify-center>
@@ -41,6 +47,9 @@
 </template>
 
 <style lang="scss">
+.drawer__footer {
+  box-shadow: 0 0 4px rgba(0, 0, 0, .2);
+}
 .v-navigation-drawer--right {
   &.v-navigation-drawer--open {
     box-shadow: 0 0 8px rgba(0, 0, 0, .2);
