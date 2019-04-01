@@ -1,10 +1,12 @@
 <template>
-  <header>
-    <div class="container">
-      <h1>{{ title }}</h1>
-      <Navigator />
-    </div>
-  </header>
+  <v-toolbar app flat dark color="blue">
+    <v-toolbar-title>
+      <span class="font-weight-bold">Edith</span>
+      <span class="font-weight-regular"> | {{ title }}</span>
+    </v-toolbar-title>
+    <v-spacer></v-spacer>
+    <Navigator />
+  </v-toolbar>
 </template>
 
 <script>
@@ -22,18 +24,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-header {
-  background-color: #0090E3;
-  padding: 1em;
-  display: table;
-  width: 100%;
-  margin-bottom: 1em;
-}
-
-h1 {
-  color: #ffffff;
-  float: left;
-}
-</style>

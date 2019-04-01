@@ -1,12 +1,21 @@
 <template>
-  <ul class="list">
-    <li v-for="item in list" :key="item.id">
-      <router-link :to="`/${type}/${item.id}`" v-if="type">{{ item.name }}</router-link>
-      <template v-else>
-        {{ item.name }}
-      </template>
-    </li>
-  </ul>
+  <v-list dense>
+    <template v-for="(item, index) in list">
+      <v-list-tile
+        :key="item.id"
+        :to="`/${type}/${item.id}`">
+        <v-list-tile-content>
+          <v-list-tile-title
+            class="font-weight-regular"
+          >{{ item.name }}</v-list-tile-title>
+        </v-list-tile-content>
+        <v-list-tile-action>
+          <v-icon color="black">chevron_right</v-icon>
+        </v-list-tile-action>
+      </v-list-tile>
+      <v-divider :key="`divider-${index}`"></v-divider>
+    </template>
+  </v-list>
 </template>
 
 <script>
@@ -23,18 +32,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-  .list {
-    list-style: none;
-
-    li {
-      padding: 0.5em 1em;
-      background-color: #F3F3F3;
-
-      &:nth-of-type(even) {
-        background-color: #DDDDDD;
-      }
-    }
-  }
-</style>

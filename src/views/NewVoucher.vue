@@ -61,8 +61,8 @@ export default {
       this.resetForm();
 
       this.issueVoucher(data)
-        .then(data => {
-          this.message = 'Voucher issued! Yey!'
+        .then(() => {
+          this.message = 'Voucher issued! Yey!';
           this.messageType = 'message--success';
         });
     },
